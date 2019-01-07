@@ -40,7 +40,7 @@ class SinglyLinkedList {
                 this.head = null;
                 this.tail = null;
             }
-            return current.val;
+            return current;
         } else {
             return undefined;
         }
@@ -59,6 +59,7 @@ class SinglyLinkedList {
         }
     }
 
+    //Remove from head
     shift() {
         if(this.head) {
             let temp = this.head;
@@ -73,6 +74,7 @@ class SinglyLinkedList {
         }
     }
 
+    //Insert into head
     unshift(val) {
         let newNode = new Node(val);
         if(this.head) {
@@ -94,8 +96,51 @@ class SinglyLinkedList {
             for(let i = 0; i < index; i++) {
                 currentIndex = currentIndex.next;
             }
-            return currentIndex.val;
+            return currentIndex;
         }
+    }
+
+    set(index, val) {
+        let foundNode = this.get(index);
+        if(foundNode) {
+            foundNode.val = val;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    insert(index, val) {
+        let newNode = new Node(val);
+        if(index < 0 || index > this.length) {
+            return false;
+        } else if(index === this.length) {
+            return !!this.push(newNode);
+        } else if(index === 0) {
+            return !!this.unshift(val);
+        } else {
+            let prev = this.get(index - 1);
+            newNode.next = prev.next;
+            prev.next = newNode;
+            this.length++;
+            return true;
+        }
+    }
+
+    remove(index) {
+        if(index < 0 || index > this.length) {
+            return undefined;
+        } else if(index === this.length - 1) {
+            return this.pop();
+        } else if(index === 0) {
+            return this.shift();
+        } else {
+            let prev = this.get(index - 1);
+            var removedNode = prev.next;
+            prev.next = removedNode.next;
+        }
+        this.length--;
+        return removedNode;
     }
 }
 
@@ -111,7 +156,7 @@ console.log(`** ${list.pop()} popped **`);
 console.log("=====================");
 list.traverse();
 console.log("=====================");
-console.log(`** ${list.shift()} shifted **`)
+console.log(`** ${list.shift()} shifted **`);
 console.log("=====================");
 list.traverse();
 console.log("=====================");
@@ -119,4 +164,16 @@ console.log(`** Unshift Anthony **`);
 console.log("=====================");
 list.unshift("Anthony");
 list.traverse();
-console.log(`GET INDEX 2: ${list.get(2)}`);
+console.log(`GET INDEX 2: ${list.get(2).val}`);
+list.set(1, "Bob");
+list.traverse();
+console.log("=====================");
+console.log("Insert John into index 2");
+console.log("=====================");
+list.insert(2, "John");
+list.traverse();
+console.log("=====================");
+console.log("Remove index 2");
+console.log("=====================");
+list.remove(2);
+list.traverse();
