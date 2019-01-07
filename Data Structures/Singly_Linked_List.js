@@ -142,6 +142,24 @@ class SinglyLinkedList {
         this.length--;
         return removedNode;
     }
+
+    reverse() {
+        //Swap head and tail
+        let currentNode = this.head;
+        this.head = this.tail;
+        this.tail = currentNode;
+
+        let prevNode = null;
+        let nextNode;
+
+        for(let i = 0; i < this.length; i++) {
+            nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
+        }
+        return this;
+    }
 }
 
 let list = new SinglyLinkedList();
@@ -150,6 +168,8 @@ list.push("Paul");
 list.push("James");
 list.push("Thomas");
 list.push("Matthew");
+list.push("Maria");
+list.push("Arianna");
 list.traverse();
 console.log("=====================");
 console.log(`** ${list.pop()} popped **`);
@@ -176,4 +196,9 @@ console.log("=====================");
 console.log("Remove index 2");
 console.log("=====================");
 list.remove(2);
+list.traverse();
+console.log("=====================");
+console.log("** List is reversed **");
+console.log("=====================");
+list.reverse();
 list.traverse();
