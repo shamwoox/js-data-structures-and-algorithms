@@ -65,18 +65,95 @@ class BinarySearchTree {
             return false;
         }
     }
+
+    BFS() {
+        let queue = [], visited = [];
+        let node = this.root;
+        queue.push(node);
+        while(queue.length) {
+            node = queue.shift();
+            visited.push(node.val);
+            if(node.left) {
+                queue.push(node.left);
+            }
+            if(node.right) {
+                queue.push(node.right);
+            }
+        }
+        return visited;
+    }
+
+    DFSPreOrder() {
+        let visited = [];
+        let current = this.root;
+        function traverse(node) {
+            visited.push(node.val);
+            if(node.left) {
+                traverse(node.left);
+            }
+            if(node.right) {
+                traverse(node.right);
+            }
+        }
+        traverse(current);
+        return visited;
+    }
+
+    DFSPostOrder() {
+        let visited = [];
+        let current = this.root;
+        function traverse(node) {
+            if(node.left) {
+                traverse(node.left);
+            }
+            if(node.right) {
+                traverse(node.right);
+            }
+            visited.push(node.val);
+        }
+        traverse(current);
+        return visited;
+    }
+
+    DFSInOrder() {
+        let visited = [];
+        let current = this.root;
+        function traverse(node) {
+            if(node.left) {
+                traverse(node.left);
+            }
+            visited.push(node.val);
+            if(node.right) {
+                traverse(node.right);
+            }
+        }
+        traverse(current);
+        return visited;
+    }
 }
 
 let bst = new BinarySearchTree();
-bst.insert(20);
+// bst.insert(20);
+// bst.insert(10);
+// bst.insert(8);
+// bst.insert(11);
+// bst.insert(9);
+// bst.insert(25);
+// bst.insert(24);
+// bst.insert(27);
+// console.log(bst);
+// console.log(bst.find(9));
+// console.log(bst.find(11));
+// console.log(bst.find(23));
+
 bst.insert(10);
+bst.insert(6);
+bst.insert(3);
 bst.insert(8);
-bst.insert(11);
-bst.insert(9);
-bst.insert(25);
-bst.insert(24);
-bst.insert(27);
-console.log(bst);
-console.log(bst.find(9));
-console.log(bst.find(11));
-console.log(bst.find(23));
+bst.insert(15);
+bst.insert(20);
+
+console.log(`BFS Traversal: ${bst.BFS()}`);
+console.log(`PreOrder Traversal: ${bst.DFSPreOrder()}`);
+console.log(`PostOrder Traversal: ${bst.DFSPostOrder()}`);
+console.log(`InOrder Traversal: ${bst.DFSInOrder()}`);
