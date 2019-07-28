@@ -3,7 +3,7 @@ class Graph {
         this.adjacencyList = {};
     }
 
-    addVertext(vertex) {
+    addVertex(vertex) {
         if(!this.adjacencyList[vertex]) {
             this.adjacencyList[vertex] = [];
         }
@@ -32,4 +32,36 @@ class Graph {
         }
         delete this.adjacencyList[vertex];
     }
+
+    depthFirstRecursive(start) {
+        const result = [];
+        const visited = {};
+        const adjacencyList = this.adjacencyList;
+        (function DFS(vertex) {
+            if(!vertex) return null;
+            visited[vertex] = true;
+            result.push(vertex);
+            adjacencyList[vertex].forEach(neighbor => {
+                if(!visited[neighbor]) {
+                    return dfs(neighbor);
+                }
+            })
+        })(start)
+        return result;
+    }
 }
+
+g.addVertex("A");
+g.addVertex("B");
+g.addVertex("C");
+g.addVertex("D");
+g.addVertex("E");
+g.addVertex("F");
+
+g.addEdge("A", "B");
+g.addEdge("A", "C");
+g.addEdge("B", "D");
+g.addEdge("C", "E");
+g.addEdge("D", "E");
+g.addEdge("D", "F");
+g.addEdge("E", "F");
